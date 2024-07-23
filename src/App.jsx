@@ -1,42 +1,33 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'
 
 const App = () => {
-  const [resource, setResource] = useState("");
-  const [items, setItems] = useState([])
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  const handleWidth = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  const handleHeight = () => {
+    setWindowHeight(window.innerHeight);
+  }
 
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/${resource}`)
-      .then(response => response.json())
-      .then(json => setItems(json))
-    // return () => {
-    //   console.log('hello from return');
-    // }
-  }, [resource]);
+    window.addEventListener("resize", handleWidth);
+    window.addEventListener('resize', handleHeight);
+  }, []);
 
   return (
-    <>
-      <button onClick={() => setResource("posts")}>Posts</button>
-      <button onClick={() => setResource("users")}>Users</button>
-      <button onClick={() => setResource("comments")}>Comments</button>
+    <div>
+      Your window width is: {windowWidth}
       <br />
+      Your window heigth is: {windowHeight}
       <br />
-      <button onClick={() => setResource("")}> reset</button>
-      <br />
-      <h2>{resource}</h2>
-      {
-        items.map((item) => {
-          return <pre
-            key={item.id}
-          >
-            {JSON.stringify(item)}
-          </pre>
-        })
-      }
-    </>
-  );
+  </div>);
 };
 
 export default App;
