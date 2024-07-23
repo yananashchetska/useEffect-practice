@@ -14,11 +14,16 @@ const App = () => {
 
   const handleHeight = () => {
     setWindowHeight(window.innerHeight);
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("resize", handleWidth);
-    window.addEventListener('resize', handleHeight);
+    window.addEventListener("resize", handleHeight);
+
+    return () => {
+      window.removeEventListener("resize", handleWidth);
+      window.removeEventListener("resize", handleHeight);
+    };
   }, []);
 
   return (
@@ -27,7 +32,8 @@ const App = () => {
       <br />
       Your window heigth is: {windowHeight}
       <br />
-  </div>);
+    </div>
+  );
 };
 
 export default App;
